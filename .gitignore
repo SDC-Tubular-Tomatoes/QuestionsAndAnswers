@@ -1,0 +1,9 @@
+# config
+*.env
+
+# OS
+.DS_Store
+
+
+# directories
+node_modules/
