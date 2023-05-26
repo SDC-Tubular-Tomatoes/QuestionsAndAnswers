@@ -5,7 +5,7 @@
 -- CREATE DATABASE databasename;
 
 -- To run a SQL file (schema) in PostgreSQL from the shell navegate into the dr that has the schema and  run the following command in your terminal.
--- psql -U atelier -d atelier -a -f /path/to/your/schema.sql
+-- psql -U username -d databasename -a -f /path/to/your/schema.sql
 
 DROP TABLE IF EXISTS characteristic_reviews;
 DROP TABLE IF EXISTS characteristics;
