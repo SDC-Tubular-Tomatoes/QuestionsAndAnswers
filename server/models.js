@@ -1,40 +1,77 @@
-/* eslint-disable no-console */
 /* eslint-disable no-unused-vars */
 /* eslint-disable camelcase */
-const { db } = require('./db');
 
-console.log('>', db);
-exports.listReviews = (
-  page = 1,
-  count = 10,
-  sort = 'newest',
-  product_id = 2,
-) => {
-  const query = `
-  SELECT reviews.*, array_agg(reviews_photos.url) as review_photos
-  FROM reviews
-  LEFT JOIN reviews_photos ON reviews.review_id = reviews_photos.review_id
-  WHERE reviews.product_id = $1
-  GROUP BY reviews.review_id
-  ORDER BY reviews.date DESC
-  LIMIT $2
-`;
-  const values = [product_id, count];
+const { db } = require('../db/db');
+
+exports.listReviews = (product_id = 2, page = 1, count = 5, sort = 'date') => {
+  let sortBy = 'date';
+  switch (sort) {
+    case 'helpful':
+      sortBy = 'helpfulness';
+      break;
+    case 'newest':
+      sortBy = 'date';
+      break;
+    default:
+      sortBy = 'date';
+  }
+  const offset = (page - 1) * count;
+  const query = `SELECT
+  r.review_id,
+  r.rating,
+  r.summary,
+  r.recommend,
+  r.response,
+  r.body,
+  r.date,
+  r.reviewer_name,
+  r.helpfulness,
+  json_agg(json_build_object('url', rp.url)) AS photos
+FROM reviews r
+LEFT JOIN reviews_photos rp ON r.review_id = rp.review_id
+WHERE r.product_id = $1
+GROUP BY r.review_id
+ORDER BY r.${sortBy} DESC
+LIMIT $2 OFFSET $3;
+  `;
+  const values = [product_id, count, offset];
   return db.query(query, values);
 };
 
-exports.metadata = async (product_id = 2) => {
-  const query_1 = 'SELECT rating, COUNT(*) FROM reviews WHERE product_id = $1 GROUP BY rating';
-  // const query_2 = 'SELECT recommend, COUNT(*) FROM reviews WHERE product_id = $1 GROUP BY recommend';
-  // const query_3 = 'SELECT characteristic_id, name FROM characteristics WHERE product_id = $1';
-  // const query_4 = 'SELECT AVG(value) FROM characteristic_reviews WHERE characteristic_id = $1';
+exports.metadata = (product_id = 2) => {
+  const query = `WITH ratings AS (
+    SELECT rating, COUNT(*) as count
+    FROM reviews
+    WHERE product_id = $1
+    GROUP BY rating
+  ),
+  recommendations AS (
+    SELECT recommend, COUNT(*) as count
+    FROM reviews
+    WHERE product_id = $1
+    GROUP BY recommend
+  ),
+  chars AS (
+    SELECT
+      c.name,
+      c.characteristic_id,
+      AVG(cr.value) as value
+    FROM characteristics c
+    JOIN characteristic_reviews cr ON c.characteristic_id = cr.characteristic_id
+    WHERE c.product_id = $1
+    GROUP BY c.name, c.characteristic_id
+  )
+  SELECT
+    p.product_id,
+    (SELECT jsonb_object_agg(rating, count) FROM ratings) AS ratings,
+    (SELECT jsonb_object_agg(recommend::text, count) FROM recommendations) AS recommended,
+    (SELECT jsonb_object_agg(name, jsonb_build_object('id', characteristic_id, 'value', value::text)) FROM chars) AS characteristics
+  FROM products p
+  WHERE p.product_id = $1;
+  `;
+
   const value = [product_id];
-  const result1 = await db.query(query_1, value);
-  // const result2 = await db.query(query_2, value);
-  // const result3 = await db.query(query_3, value);
-  // const result4 = await db.query(query_4, [result3.rows[0].characteristic_id]);
-  // console.log ('>>>>>>>>>>', result3.rows[0].characteristic_id)
-  return result1;
+  return db.query(query, value);
 };
 
 // exports.addReview = (
@@ -51,11 +88,18 @@ exports.metadata = async (product_id = 2) => {
 //
 // };
 
-// exports.markReviewAsHelpful = (review_id) => {
-//
-//
-// };
+exports.markReviewAsHelpful = (review_id) => {
+  const value = [review_id];
+  const query = `UPDATE reviews
+  SET helpfulness = helpfulness + 1
+  WHERE review_id = $1`;
+  return db.query(query, value);
+};
 
-// exports.reportReview = (review_id) => {
-//
-// };
+exports.reportReview = (review_id) => {
+  const value = [review_id];
+  const query = `UPDATE reviews
+  SET reported = true
+  WHERE review_id = $1`;
+  return db.query(query, value);
+};
