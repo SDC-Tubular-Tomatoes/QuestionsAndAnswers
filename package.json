@@ -4,8 +4,14 @@
   "description": "system design ",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "npx nodemon --watch  server ./server/index.js"
+    "test": "jest",
+    "testSpecific": "jest spec/review.spec.js",
+    "start": "npx nodemon --watch  server ./server/index.js",
+    "k6_meta": "k6 run k6/k6_meta.js",
+    "k6_reviews": "k6 run k6/k6_reviews.js",
+    "k6_helpful": "k6 run k6/k6_helpful.js",
+    "k6_report": "k6 run k6/k6_report.js",
+    "k6_review": "k6 run k6/k6_review.js"
   },
   "repository": {
     "type": "git",
@@ -27,10 +33,13 @@
     "dotenv": "^16.0.3",
     "express": "^4.18.2",
     "fast-csv": "^4.3.6",
+    "jest": "^29.5.0",
     "mongoose": "^7.2.1",
     "morgan": "^1.10.0",
     "path": "^0.12.7",
     "pg": "^8.11.0",
-    "pg-promise": "^11.4.3"
+    "pg-promise": "^11.4.3",
+    "redis": "^4.6.6",
+    "supertest": "^6.3.3"
   }
 }
