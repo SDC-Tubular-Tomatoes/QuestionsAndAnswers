@@ -14,5 +14,5 @@ export const options = {
 
 export default function () {
   const random_review_id = Math.floor(900000 + Math.random() * 100000);
-  const res = http.get(http.url`http://localhost:3000/api/reviews/${random_review_id}/report`);
+  const res = http.put(http.url`http://localhost:3000/api/reviews/${random_review_id}/report`);
 }
