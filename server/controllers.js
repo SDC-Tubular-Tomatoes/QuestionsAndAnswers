@@ -9,7 +9,12 @@ exports.getListReviews = (req, res) => {
       req.query.count,
       req.query.sort,
     )
-    .then((result) => (res.status(200).send(result[0])))
+    .then((result) => (res.status(200).send({
+      product: req.query.product_id,
+      page: req.query.page,
+      count: req.query.count,
+      results: result,
+    })))
     .catch((err) => {
       console.log('CONTROLLER REVIEWS GET LIST REVIEWS', err);
       res.sendStatus(505);
@@ -49,10 +54,7 @@ exports.getReviewsMetadata = (req, res) => {
 exports.putReviewAsHelpful = (req, res) => {
   models
     .markReviewAsHelpful(req.params.review_id)
-    .then(() => {
-      res.sendStatus(204);
-      models.refresh_reviews();
-    })
+    .then(() => res.sendStatus(204))
     .catch((err) => {
       console.log('CONTROLLER REVIEWS PUT REVIEW', err);
       res.sendStatus(505);
@@ -62,10 +64,7 @@ exports.putReviewAsHelpful = (req, res) => {
 exports.putReportReview = (req, res) => {
   models
     .reportReview(req.params.review_id)
-    .then(() => {
-      res.sendStatus(204);
-      models.refresh_reviews();
-    })
+    .then(() => res.sendStatus(204))
     .catch((err) => {
       console.log('CONTROLLER REVIEWS PUT REVIEW', err);
       res.sendStatus(505);
