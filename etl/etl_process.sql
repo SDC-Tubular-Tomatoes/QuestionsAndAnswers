@@ -3,35 +3,37 @@
 
 -- COPY CSV FILES INTO PRODUCTS TABLE
 COPY products(product_id, name, slogan, description, category,default_price)
-FROM '/Users/tammamtautou/Downloads/characteristics/product.csv'
+FROM 'PRODUCT = /Users/tammamtautou/rfp2303/SDC/RatingsAndReviews-T/csv_files/product.csv
+'
 DELIMITER ','
 CSV HEADER;
 
 
 -- COPY CSV FILES INTO REVIEWS TABLE
 COPY reviews(review_id, product_id,rating,date, summary, body, recommend, reported,reviewer_name, reviewer_email, response, helpfulness)
-FROM '/Users/tammamtautou/Downloads/reviews/reviews.csv'
+FROM 'REVIEWS = /Users/tammamtautou/rfp2303/SDC/RatingsAndReviews-T/csv_files/reviews.csv
+'
 DELIMITER ','
 CSV HEADER;
 
 
 -- COPY CSV FILES INTO REVIEWS PHOTOS TABLE
 COPY reviews_photos(reviews_photos_id, review_id, url)
-FROM '/Users/tammamtautou/Downloads/reviews_photos/reviews_photos.csv'
+FROM '/Users/tammamtautou/rfp2303/SDC/RatingsAndReviews-T/csv_files/reviews_photos.csv'
 DELIMITER ','
 CSV HEADER;
 
 
 --  COPY CSV FILE INTO CHARACTERISTICS TABLE
 COPY characteristics(characteristic_id, product_id, name)
-FROM '/Users/tammamtautou/Downloads/characteristics/characteristics.csv'
+FROM '/Users/tammamtautou/rfp2303/SDC/RatingsAndReviews-T/csv_files/characteristics.csv'
 DELIMITER ','
 CSV HEADER;
 
 
 --  COPY CSV FILE INTO CHARACTERISTIC_REVIEWS TABLE
 COPY characteristic_reviews(characteristic_reviews_id, characteristic_id, review_id, value)
-FROM '/Users/tammamtautou/Downloads/characteristic_reviews/characteristic_reviews.csv'
+FROM '/Users/tammamtautou/rfp2303/SDC/RatingsAndReviews-T/csv_files/characteristic_reviews.csv'
 DELIMITER ','
 CSV HEADER;
 
