@@ -3,7 +3,7 @@
 
 const { db } = require('../db/db');
 
-exports.listReviews = (product_id = 2, page = 1, count = 5, sort = 'date') => {
+exports.listReviews = (product_id = 40346, page = 0, count = 5, sort = 'date') => {
   let sortBy = 'date';
   switch (sort) {
     case 'helpful':
