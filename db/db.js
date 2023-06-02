@@ -6,10 +6,11 @@ const pgpModule = require('pg-promise');
 const pgp = pgpModule();
 
 const connection = {
+  user: process.env.SQLUSER,
   host: process.env.HOST,
-  port: process.env.SQLPORT,
   database: process.env.DATABASE,
-  user: process.env.USER,
+  port: process.env.SQLPORT,
+  password: process.env.SQLPASSWORD,
 };
 
 const db = pgp(connection);

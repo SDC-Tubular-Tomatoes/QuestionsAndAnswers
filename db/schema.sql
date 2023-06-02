@@ -6,8 +6,8 @@
 -- psql -U username -d databasename -a -f /path/to/your/schema.sql
 
 -- DROP THEN CREATE DB
-DROP DATABASE IF EXISTS atelier;
-CREATE DATABASE atelier;
+-- DROP DATABASE IF EXISTS atelier;
+-- CREATE DATABASE atelier;
 
 -- DROP TABLES
 DROP TABLE IF EXISTS characteristic_reviews;

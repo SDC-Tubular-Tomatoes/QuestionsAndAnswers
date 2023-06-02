@@ -3,12 +3,14 @@
 require('dotenv').config();
 const express = require('express');
 const router = require('./routes');
+// const morgan = require('morgan');
 
 // initializes a new Express application
 const app = express();
 
 // middelwares
 app.use(express.json());
+// app.use(morgan('dev'));
 
 // Create route
 app.use('/api', router);
