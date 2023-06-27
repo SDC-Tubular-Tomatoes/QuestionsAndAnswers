@@ -8,7 +8,8 @@
 ![NPM](https://img.shields.io/badge/NPM-%23CB3837.svg?style=for-the-badge&logo=npm&logoColor=white)
 
 
-![AWS](https://img.shields.io/badge/AWS-%23323330.svg?style=for-the-badge&logo=amazon-aws&logoColor=232F3E)
+[![AWS](https://img.shields.io/badge/AWS-%23323330.svg?style=for-the-badge&logo=amazon-aws&logoColor=232F3E){style="background-color: orange"}](https://aws.amazon.com/)
+
 ![NGINX](https://img.shields.io/badge/NGINX-%23323330.svg?style=for-the-badge&logo=nginx&logoColor=269539)
 
 ![Jest](https://img.shields.io/badge/Jest-%23323330.svg?style=for-the-badge&logo=jest&logoColor=C21325)
