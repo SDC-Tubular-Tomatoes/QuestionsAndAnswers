@@ -1,7 +1,7 @@
 # Atelierx
 
 ## Tech Stack
-[![PostgreSQL](https://img.shields.io/badge/PostgreSQL-%23323330.svg?style=for-the-badge&logo=postgresql&logoColor=336791){width=100px}](https://www.postgresql.org/)
+![PostgreSQL](https://img.shields.io/badge/PostgreSQL-%23323330.svg?style=for-the-badge&logo=postgresql&logoColor=336791)
 ![JavaScript](https://img.shields.io/badge/javascript-%23323330.svg?style=for-the-badge&logo=javascript&logoColor=%23F7DF1E)
 ![NodeJS](https://img.shields.io/badge/node.js-6DA55F?style=for-the-badge&logo=node.js&logoColor=white)
 ![Express.js](https://img.shields.io/badge/express.js-%23404d59.svg?style=for-the-badge&logo=express&logoColor=%2361DAFB)
